@@ -20,12 +20,14 @@
 
 require(foreach)
 require(doMC)
-registerDoMC(cores=8)
+registerDoMC(cores = 8)
 ragged.list.melt <- function(x) {
-  do.call(rbind, 
-          foreach(i=1:length(x)) %dopar% {
+  do.call(rbind,
+          foreach(i = 1:length(x)) %dopar% {
             cur.line <- x[[i]]
-            if(length(cur.line)>0) # this checks for lines without a match.  The empty lines will make a mess of downstream things.
+            # this checks for lines without a match.  The empty lines will make
+            # a mess of downstream things.
+            if (length(cur.line) > 0) 
               cbind(i, cur.line)
           }
   )
