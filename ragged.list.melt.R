@@ -16,11 +16,6 @@
 # Outputs -------------------------------------------------
 # a matrix/data.frame which is long and with a fixed number of columns
 
-
-
-require(foreach)
-require(doMC)
-registerDoMC(cores = 8)
 ragged.list.melt <- function(x) {
   do.call(rbind,
           lapply(1:length(x), function(i) {
