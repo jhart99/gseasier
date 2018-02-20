@@ -8,17 +8,25 @@
 # Melts a ragged list into a long matrix
 
 # Input -------------------------------------------------------------------
-# Ragged list object
+# Ragged list object of constant type(numeric, character, etc)
 
 # Methods -------------------------------------------------
 # ragged.list.melt
 
 # Outputs -------------------------------------------------
-# a matrix/data.frame which is long and with a fixed number of columns
+# a 
 
+#' Title
+#'
+#' @param x A list of uneven vectors of constant type
+#'
+#' @return
+#' @export
+#'
+#' @examples
 ragged.list.melt <- function(x) {
   do.call(rbind,
-          lapply(1:length(x), function(i) {
+          lapply(seq_along(x), function(i) {
             if (length(x[[i]]) > 0) {
               cbind(i, x[[i]])
             }
