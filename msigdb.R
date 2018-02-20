@@ -47,5 +47,5 @@ loadSig <- function(filename, path=".") {
   data.frame(sig = genes$sig,
              class = filename,
              def = genes$def,
-             gene = genes$cur.line)
+             gene = genes[ ,2])
 }

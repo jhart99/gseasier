@@ -23,12 +23,9 @@ require(doMC)
 registerDoMC(cores = 8)
 ragged.list.melt <- function(x) {
   do.call(rbind,
-          foreach(i = 1:length(x)) %dopar% {
-            cur.line <- x[[i]]
-            # this checks for lines without a match.  The empty lines will make
-            # a mess of downstream things.
-            if (length(cur.line) > 0) 
-              cbind(i, cur.line)
-          }
-  )
+          lapply(1:length(x), function(i) {
+            if (length(x[[i]]) > 0) {
+              cbind(i, x[[i]])
+            }
+          }))
 }
