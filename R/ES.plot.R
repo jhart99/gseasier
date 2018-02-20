@@ -76,8 +76,53 @@ ES.plot <- function(gmt, cls, comparison, geneset) {
           panel.border=element_blank()) +
     ylab("")
   
-  # hacky things to modify the facets to different heights, remove the axis that aren't needed, etc.
-  # this part is fragile and might break if ggplot2 is a different version.
+  # hacky things to modify the facets to different heights, remove the axis that
+  # aren't needed, etc. this part is fragile and might break if ggplot2 is a
+  # different version.  These are magic numbers here and I will try to explain
+  # what they are, how to get them and how to fix this if ggplot updates and
+  # blows this part up.
+  
+  # in order to do advanced things to the plot we need to make it into a grid 
+  # object so we can adjust the parts. First 15 and 16 are targetting the Y axes
+  # for panel 2 and 3 and resetting them to null.  Second, 7 and 22 are 
+  # adjusting the heights of the panel 1 and panel 4.  The other parts are a 
+  # height of 1 so top is 3 times and bottom is 2 times of the middle parts. 
+  # Finally add a second Axis label.  This is done here because if we put this
+  # in ggplot the panels don't align right.  the 7 and 22 refer to the positions
+  # of panel 1 and panel 4 in the table.
+  
+  # how to get to the numbers?  well set a breakpoint in this function. after 
+  # the following line.  look at gt and you will see all the pieces of the plot.
+  # Beware, the order doesn't correspond to the numbers you want.  Numbers for
+  # the second axis are easy just look for these.
+  
+  # 2   1 ( 7- 7, 4- 4)   panel-1-1               gTree[panel-1.gTree.6101]
+  # 3   1 (12-12, 4- 4)   panel-1-2               gTree[panel-2.gTree.6116]
+  # 4   1 (17-17, 4- 4)   panel-1-3               gTree[panel-3.gTree.6131]
+  # 5   1 (22-22, 4- 4)   panel-1-4               gTree[panel-4.gTree.6146]
+  
+  # Those tell you to use 7 and 22 for the text height and you need to use
+  # something less than 4 for the width.  3 is the normal axis, so go with 2.
+  
+  # same for the axis to delete
+  
+  # 14  3 ( 7- 7, 3- 3)  axis-l-1-1    absoluteGrob[GRID.absoluteGrob.5436]
+  # 15  3 (12-12, 3- 3)  axis-l-2-1    absoluteGrob[GRID.absoluteGrob.5443]
+  # 16  3 (17-17, 3- 3)  axis-l-3-1    absoluteGrob[GRID.absoluteGrob.5450]
+  # 17  3 (22-22, 3- 3)  axis-l-4-1    absoluteGrob[GRID.absoluteGrob.5457]
+  
+  # get those and set them to zeroGrob()
+  
+  # finally you need to adjust the heights, but these don't correspond to the 
+  # same order.  Basically you will have to do this by inspecting the height 
+  # object. gt$heights These are ugly but you are looking for the lines that
+  # have a height of 1null those are the panel heights.  They are in order from
+  # top to bottom.
+  
+  # [1] 0lines              0cm                 0cm                 0cm                 0cm                 0cm                 1null               0cm                 0lines              0cm                
+  # [11] 0cm                 1null               0cm                 0lines              0cm                 0cm                 1null               0cm                 0lines              0cm                
+  # [21] 0cm                 1null               0.412097602739726cm 1grobheight         0cm                 0lines  
+  
   gt <- ggplot_gtable(ggplot_build(p))
   gt$grobs[[15]] <- zeroGrob()
   gt$grobs[[16]] <- zeroGrob()
