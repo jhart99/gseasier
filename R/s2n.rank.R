@@ -28,6 +28,7 @@
 #'
 #' @examples
 s2n.rank <- function(gct, cls, contrast=NULL) {
+  source('R/s2n.score.R')
   if (is.null(contrast)){
     contrast=list(levels(cls)[1], levels(cls)[2])
   }
