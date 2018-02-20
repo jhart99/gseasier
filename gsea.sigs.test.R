@@ -46,3 +46,5 @@ test.matrix <- convert.sigs.to.matrix(test.sigs, genes)
 test.compare <- compare.sigs(sig.matrix, test.matrix)
 
 head(test.compare[order(test.compare$q.value), ], 75)
+
+toot <- test.matrix %*% t(test.matrix)

@@ -32,17 +32,22 @@
 #' @examples
 #' convert.sigs.to.matrix(signatures, genes)
 convert.sigs.to.matrix <- function(signatures, genes) {
-  # gene names will be used as column names so we need to make sure they are R
-  # safe
+  # This could be rewritten using some sort of sparse matrix which will
+  # save on memory, but in general I haven't found that the performance tradeoff
+  # is worth it.  Using Matrix reduces memory usage by ~10 fold but increases
+  # CPU time by ~10x or more.
+  
+  # gene names will be used as column names so we need to make sure they are R 
+  # safe 
   signatures$xgene <- make.names(signatures$gene)
   signatures$xsig <- make.names(signatures$sig)
   total.genes <- length(genes)
   sig.labels <- unique(signatures$xsig)
-  sig.matrix <- matrix(0, nrow = length(sig.labels), ncol = total.genes)
+  sig.matrix <- matrix(0L, nrow = length(sig.labels), ncol = total.genes)
   rownames(sig.matrix) <- sig.labels
   colnames(sig.matrix) <- genes
   system.time(for (i in 1:nrow(signatures)) {
-    sig.matrix[signatures$xsig[i], signatures$xgene[i]] <- 1
+    sig.matrix[signatures$xsig[i], signatures$xgene[i]] <- 1L
   })
   sig.matrix
 }
