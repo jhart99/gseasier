@@ -25,13 +25,13 @@
 # this part will work with either set of genes.  Meaning you can use entrez ids
 # or gene names as you prefer.
 
-source("msigdb.R")
+source("R/msigdb.R")
 sig.gmts <- list.files("gsea", "all.*entrez")
 sig.list <- lapply(sig.gmts, loadSig, path = "gsea")
 sigs <- do.call(rbind, sig.list)
 rm(sig.list, sig.gmts)
 
-source("gsea.sigs.R")
+source("R/gsea.sigs.R")
 # I'm selecting a list of signatures that is just the set of all the hallmarks.
 test.sigs <- sigs[sigs$class == "h.all", ]
 # you need to know the set of all genes present in the signatures and your test

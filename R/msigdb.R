@@ -28,7 +28,7 @@
 #' @examples
 #' sigs <- loadSigs("test.gmt", ".")
 loadSig <- function(filename, path=".") {
-  source("ragged.list.melt.R")
+  source("R/ragged.list.melt.R")
 
   sig.file <- file(paste0(path, "/", filename), "rt")
   sig.text <- readLines(sig.file)
