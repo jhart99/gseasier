@@ -54,4 +54,11 @@ gender.gsea <- cbind(read.gsea.results(c1.gender),
 
 # make a plot of the top result.
 source('R/ES.plot.R')
+
+# example methods for ES.plot  All of the following will produce the same plot
 ES.plot(gender, gender.cls, NULL, sigs$gene[sigs$sig == "chr9p22"])
+ES.plot(gender, gender.cls, geneset = sigs$gene[sigs$sig == "chr9p22"])
+ES.plot(gender, gender.cls, geneset = "chr9p22", msigdb = sigs)
+
+ES.plot(sn.table = gender.sn, geneset = sigs$gene[sigs$sig == "chr9p22"])
+ES.plot(sn.table = gender.sn, geneset = "chr9p22", msigdb = sigs)
