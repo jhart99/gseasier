@@ -85,7 +85,8 @@ ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
                                  yend = 0)) +
     ggplot2::geom_segment() + ggplot2::theme_bw() +
     theme.blank.y
-  gradient <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank)) + ggplot2::theme_bw() +
+  gradient <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank)) +
+    ggplot2::theme_bw() +
     ggplot2::geom_tile(ggplot2::aes(y = 0, fill = as.numeric(percentile))) +
     ggplot2::scale_fill_gradient2(midpoint = 5, low = "blue", high = "red") +
     theme.blank.y +

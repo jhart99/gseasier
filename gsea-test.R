@@ -16,7 +16,7 @@
 
 
 # Library imports ---------------------------------------------------------
-library(geasier)
+library(gseasier)
 
 # Load the MsigDB signatures
 sig.gmts <- list.files("gsea", "all.*symbols")
@@ -42,23 +42,28 @@ c1.gender  <- GSEA.preranked.java.exec(input.rnk = "gender.rnk",
                                      gs.db = "gsea/c1.all.v6.1.symbols.gmt",
                                      output.directory = "gsea.out",
                                      gs.size.threshold.max = 1500,
-                                     doc.string = "c1.all")
+                                     doc.string = "c1.all.2.0")
+# read in the data from the files
+gender.gsea <- cbind(read.gsea.results(c1.gender),
+                     cat = "c1.all.2.0", data = "gender")
 set.gsea("~/gsea/gsea2-2.2.2.jar")
 c1.gender  <- GSEA.preranked.java.exec(input.rnk = "gender.rnk",
                                        gs.db = "gsea/c1.all.v6.1.symbols.gmt",
                                        output.directory = "gsea.out",
                                        gs.size.threshold.max = 1500,
-                                       doc.string = "c1.all")
+                                       doc.string = "c1.all.2.2")
+# read in the data from the files
+gender.gsea <- cbind(read.gsea.results(c1.gender),
+                     cat = "c1.all.2.2", data = "gender")
 set.gsea("~/gsea/gsea-3.0.jar")
 c1.gender  <- GSEA.preranked.java.exec(input.rnk = "gender.rnk",
                                        gs.db = "gsea/c1.all.v6.1.symbols.gmt",
                                        output.directory = "gsea.out",
                                        gs.size.threshold.max = 1500,
-                                       doc.string = "c1.all")
-
+                                       doc.string = "c1.all.3.0")
 # read in the data from the files
 gender.gsea <- cbind(read.gsea.results(c1.gender),
-                     cat = "c1.all", data = "gender")
+                     cat = "c1.all.3.0", data = "gender")
 
 # make a plot of the top result.
 

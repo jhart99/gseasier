@@ -8,7 +8,7 @@
 # Converts the data.frame used by msigdb to a sparse matrix
 
 # Input -------------------------------------------------------------------
-# 
+#
 
 # Methods -------------------------------------------------
 # convert.sigs.to.matrix
@@ -19,7 +19,7 @@
 # Library imports ---------------------------------------------------------
 
 #' Converts signatures into a sparse matrix
-#' 
+#'
 #' @param signatures Signatures table from loadSig
 #' @param genes A list of all the genes that will be used in the comparison
 #'
