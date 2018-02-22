@@ -5,7 +5,7 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# A demonstration of the gene signature overlap routines. 
+# A demonstration of the gene signature overlap routines.
 
 # Input -------------------------------------------------------------------
 # msigdb formatted gmt files or yuor own gmt formatted gene sets
@@ -25,12 +25,9 @@
 # this part will work with either set of genes.  Meaning you can use entrez ids
 # or gene names as you prefer.
 
-
-
-
 #' Title
 #'
-#' @param filename 
+#' @param filename
 #'
 #' @return
 #' @export

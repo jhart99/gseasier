@@ -5,7 +5,7 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# A demonstration of the gene signature overlap routines. 
+# A demonstration of the gene signature overlap routines.
 
 # Input -------------------------------------------------------------------
 # msigdb formatted gmt files or yuor own gmt formatted gene sets
@@ -28,7 +28,7 @@
 
 #' Title
 #'
-#' @param filename 
+#' @param filename
 #'
 #' @return
 #' @export

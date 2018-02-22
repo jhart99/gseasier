@@ -5,27 +5,34 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# A demonstration of the gene signature overlap routines. 
+# A gene set overlap functions
 
 # Input -------------------------------------------------------------------
+# convert.sigs.to.matrix:
 # msigdb formatted gmt files or yuor own gmt formatted gene sets
 
 # Methods -------------------------------------------------
 
 # Outputs -------------------------------------------------
+# a sparse matrix of genes by sets
 
-# a table of comparisons between two sets of gene sets with odds ratios and
-# p.values
 
 # Library imports ---------------------------------------------------------
 
-# acquire the msigdb files from Broad directly at
-# http://software.broadinstitute.org/gsea/downloads.jsp
+#' Title
+#'
+#' @param gsea
+#'
+#' @return
+#' @export
+#'
+#' @examples
+gsea.pkg.env <- new.env(parent = emptyenv())
+set.gsea <- function(gsea) {
+  if (file.exists(gsea)) {
 
-# this part will work with either set of genes.  Meaning you can use entrez ids
-# or gene names as you prefer.
-
-source('R/gsea.java.exec.R')
-source('R/gsea.preranked.java.exec.R')
-source('R/find.gsea.results.R')
-source('R/read.gsea.results.R')
+    gsea.pkg.env$gsea.exec <- gsea
+  } else {
+    stop("invalid gsea executable")
+  }
+}

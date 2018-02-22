@@ -20,16 +20,14 @@
 # Library imports ---------------------------------------------------------
 
 #' Loads signatures from GMT formatted files from msigdb
-#' 
+#'
 #' @param filename The GMT file to read
 #' @param path The path to the GMT file
-#'   
+#'
 #' @return A data frame of the signatures, signature class, definitions, and genes.
 #' @examples
 #' sigs <- loadSigs("test.gmt", ".")
-loadSig <- function(filename, path=".") {
-  source("R/ragged.list.melt.R")
-
+loadSig <- function(filename, path = ".") {
   sig.file <- file(paste0(path, "/", filename), "rt")
   sig.text <- readLines(sig.file)
   close(sig.file)
@@ -47,5 +45,5 @@ loadSig <- function(filename, path=".") {
   data.frame(sig = genes$sig,
              class = filename,
              def = genes$def,
-             gene = genes[ ,2])
+             gene = genes[, 2])
 }

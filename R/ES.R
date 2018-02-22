@@ -5,7 +5,7 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# A demonstration of the gene signature overlap routines. 
+# A demonstration of the gene signature overlap routines.
 
 # Input -------------------------------------------------------------------
 # msigdb formatted gmt files or yuor own gmt formatted gene sets
@@ -28,10 +28,10 @@
 
 #' Title
 #'
-#' @param sn.table 
-#' @param geneset 
-#' @param hits.only 
-#' @param weight 
+#' @param sn.table
+#' @param geneset
+#' @param hits.only
+#' @param weight
 #'
 #' @return
 #' @export
@@ -41,22 +41,21 @@ ES <- function(sn.table, geneset, hits.only=T, weight=1) {
   genes <- rownames(sn.table)
   overlap <- intersect(genes, geneset)
   hit <- genes %in% overlap
-  
-  hit.vals <- abs(sn.table$sn**weight) * hit
-  
-  hit.scale <- 1/sum(hit.vals)
-  miss.scale <- 1/(length(genes)-length(overlap))
-  
+
+  hit.vals <- abs(sn.table$sn  ** weight) * hit
+
+  hit.scale <- 1 / sum(hit.vals)
+  miss.scale <- 1 / (length(genes) - length(overlap))
+
   # preallocate
   out <- vector("numeric", nrow(sn.table))
-  
+
   current.score <- 0
-  for(index in 1:nrow(sn.table)) {
-    #score <- ifelse(hit[index], hit.scale, -miss.scale)*(1+ + weight*abs(sn.table$sn[index])) + current.score
-    score <- ifelse(hit[index], hit.vals[index]*hit.scale, -miss.scale) + current.score
-    #score <- sum(hit)/index
+  for (index in 1:nrow(sn.table)) {
+    score <- ifelse(hit[index],
+                    hit.vals[index] * hit.scale, -miss.scale) + current.score
     out[index] <- score
     current.score <- score
   }
-  data.frame(sn.table, ES=out, hit=hit)
+  data.frame(sn.table, ES = out, hit = hit)
 }

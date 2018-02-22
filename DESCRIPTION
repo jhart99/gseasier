@@ -1,0 +1,25 @@
+Package: gseasier
+Type: Package
+Title: Run the GSEA java pacakage from inside R
+Version: 0.1.0
+Author: Jonathan Ross Hart
+Maintainer: Jonathan Ross Hart <jonathan@jonathanrosshart.com>
+Description: GSEA is a great tool for analysis of gene expression data.  There
+    are many times when it is inconvenient to run GSEA using its GUI when all of
+    your gene expression data is already in R.  Wouldn't it be nice to just run
+    GSEA from inside of R?  That is what this pacakage does.  It also will let
+    you make high resolution graphics of the enrichment plots that GSEA emits.
+License: Apache
+Encoding: UTF-8
+LazyData: true
+Imports:
+    reshape2,
+    ggplot2,
+    grid,
+    gridExtra,
+    uuid,
+    XML,
+    plyr
+Suggests:
+    parallel
+RoxygenNote: 6.0.1

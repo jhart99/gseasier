@@ -5,7 +5,7 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# A gene set overlap functions 
+# A gene set overlap functions
 
 # Input -------------------------------------------------------------------
 # convert.sigs.to.matrix:
@@ -21,22 +21,23 @@
 
 #' Title
 #'
-#' @param files 
+#' @param files
 #'
 #' @return
 #' @export
 #'
 #' @examples
 read.gsea.results <- function(files) {
-  require(XML)
-  require(foreach)
-  results <- foreach(file = files, .combine = rbind) %do% {
-    html.in  <- htmlParse(file)
-    results.table <- readHTMLTable(html.in, header = F, as.data.frame = F, which = 1)
+  results <- do.call(rbind, lapply(files, function(file) {
+    html.in  <- XML::htmlParse(file)
+    results.table <- XML::readHTMLTable(html.in, header = F,
+                                        as.data.frame = F, which = 1)
     results.table <- data.frame(lapply(results.table, type.convert, as.is = T))
-    results.table <- results.table[, c(-1,-3)]
-    colnames(results.table) <- c( "sig", "size", "ES", "NES", "p", "q", "fwer", "rank", "leader")
+    results.table <- results.table[, c(-1, -3)]
+    colnames(results.table) <- c("sig", "size", "ES",
+                                 "NES", "p", "q",
+                                 "fwer", "rank", "leader")
     results.table
-  }
+  }))
   results[order(results$ES), ]
 }

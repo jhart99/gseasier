@@ -5,7 +5,7 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# A gene set overlap functions 
+# A gene set overlap functions
 
 # Input -------------------------------------------------------------------
 # convert.sigs.to.matrix:
@@ -21,15 +21,16 @@
 
 #' Title
 #'
-#' @param doc.string 
-#' @param output.directory 
+#' @param doc.string
+#' @param output.directory
 #'
 #' @return
 #' @export
 #'
 #' @examples
 find.gsea.results <- function(doc.string, output.directory="gsea") {
-  report.dir <- list.files(paste(getwd(), output.directory, doc.string, sep = "/"),
-                           "gsea_report.*html", full.names = T)
+  report.dir <- list.files(
+    paste(getwd(), output.directory, doc.string, sep = "/"),
+    "gsea_report.*html", full.names = T)
   report.dir
 }

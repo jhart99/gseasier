@@ -5,7 +5,7 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# Enrichment set plot similar to the one provided by the GSEA program 
+# Enrichment set plot similar to the one provided by the GSEA program
 
 # Input -------------------------------------------------------------------
 
@@ -31,12 +31,6 @@
 #' @examples
 ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
                     geneset=NULL, sn.table=NULL, msigdb=NULL) {
-  library(grid)
-  library(ggplot2)
-  library(gtable)
-  library(gridExtra)
-  source("R/ES.R")
-
   if (is.null(gmt)) {
     if (is.null(sn.table)) {
       stop("Either gmt and cls or sn.table must be used to generate a plot")
@@ -61,53 +55,44 @@ ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
   plot.data$percentile <- cut(plot.data$sn,
                               quantile(plot.data$sn, probs = seq(0, 1, 1 / 9)))
 
-  grid.newpage()
-  sn.plot <- ggplot(plot.data, aes(x = rank, y = sn)) +
-    geom_point() + theme_bw() +
-    theme(plot.margin = unit(c(0, 1, 0, 0), "lines"),
-          panel.border = element_rect(size = 0),
-          panel.grid = element_blank())
-  ES.plot <- ggplot(plot.data, aes(x = rank, y = ES)) +
-    geom_line(color = "blue") + theme_bw() +
-    theme(axis.line = element_blank(),
-          axis.text.x = element_blank(),
-          axis.title.x = element_blank(),
-          axis.ticks.x = element_blank(),
-          plot.margin = unit(c(0, 1, 0, 0), "lines"),
-          panel.border = element_rect(size = 0),
-          panel.grid = element_blank())
-  ticks <- ggplot(plot.data, aes(x = rank,
+  grid::grid.newpage()
+  theme.blank.x <- ggplot2::theme(
+    axis.line = ggplot2::element_blank(),
+    axis.text.x = ggplot2::element_blank(),
+    axis.title.x = ggplot2::element_blank(),
+    axis.ticks.x = ggplot2::element_blank(),
+    plot.margin = ggplot2::unit(c(0, 1, 0, 0), "lines"),
+    panel.border = ggplot2::element_rect(size = 0),
+    panel.grid = ggplot2::element_blank())
+  theme.blank.y <- theme.blank.x +
+    ggplot2::theme(
+      axis.text.y = ggplot2::element_blank(),
+      axis.title.y = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank()
+    )
+
+  sn.plot <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank, y = sn)) +
+    ggplot2::geom_point() + ggplot2::theme_bw() +
+    ggplot2::theme(plot.margin = ggplot2::unit(c(0, 1, 0, 0), "lines"),
+          panel.border = ggplot2::element_rect(size = 0),
+          panel.grid = ggplot2::element_blank())
+  ES.plot <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank, y = ES)) +
+    ggplot2::geom_line(color = "blue") + ggplot2::theme_bw() +
+    theme.blank.x
+  ticks <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank,
                                  xend = rank,
                                  y = ifelse(hit, 0.1, 0),
                                  yend = 0)) +
-    geom_segment() + theme_bw() +
-    theme(axis.line = element_blank(),
-          axis.text.x = element_blank(),
-          axis.title.x = element_blank(),
-          axis.ticks.x = element_blank(),
-          axis.text.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.ticks.y = element_blank(),
-          plot.margin = unit(c(0, 1, 0, 1.1), "lines"),
-          panel.border = element_rect(size = 0),
-          panel.grid = element_blank())
-  gradient <- ggplot(plot.data, aes(x = rank)) + theme_bw() +
-    geom_tile(aes(y = 0, fill = as.numeric(percentile))) +
-    scale_fill_gradient2(midpoint = 5, low = "blue", high = "red") +
-    theme(legend.position = "none",
-          axis.line = element_blank(),
-          axis.text.x = element_blank(),
-          axis.title.x = element_blank(),
-          axis.ticks.x = element_blank(),
-          axis.text.y = element_blank(),
-          axis.title.y = element_blank(),
-          axis.ticks.y = element_blank(),
-          plot.margin = unit(c(0, 1, 0, 1.1), "lines"),
-          panel.border = element_rect(size = 0),
-          panel.grid = element_blank())
+    ggplot2::geom_segment() + ggplot2::theme_bw() +
+    theme.blank.y
+  gradient <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank)) + ggplot2::theme_bw() +
+    ggplot2::geom_tile(ggplot2::aes(y = 0, fill = as.numeric(percentile))) +
+    ggplot2::scale_fill_gradient2(midpoint = 5, low = "blue", high = "red") +
+    theme.blank.y +
+    ggplot2::theme(legend.position = "none")
 
     # hacky things to modify the facets to different heights
 
-  grid.arrange(ES.plot, ticks, gradient, sn.plot,
+  gridExtra::grid.arrange(ES.plot, ticks, gradient, sn.plot,
                ncol = 1, nrow = 4, heights = c(5, 1, 1, 3))
 }
