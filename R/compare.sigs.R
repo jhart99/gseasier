@@ -25,7 +25,7 @@ compare.sigs <- function(sig.matrix, test.matrix) {
   genes.per.sig <- rowSums(sig.matrix)
   total.genes <- ncol(sig.matrix)
   gc()
-  if ("parallel" %in% (.packages())) {
+  if ("pacakage:parallel" %in% search()) {
     system.time(p.values <- mcmapply(function(i, j) {
       phyper(results.vec[i, j], genes.per.sig[i],
              total.genes - genes.per.sig[i], genes.per.test[j], F)
