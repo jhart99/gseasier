@@ -110,3 +110,9 @@ leading.edge.heatmap(gender.sn, sigs[sigs$sig %in% sigs.to.test, ])
 
 leading.edge(gender.sn, sigs$gene[sigs$sig == "REACTOME_METABOLISM_OF_RNA"])
 leading.edge(gender.sn, sigs$gene[sigs$sig == "REACTOME_CELL_CYCLE"])
+
+
+# FES
+
+gender.fes.table <- FES.table(gender.sn, sigs[sigs$class == "c1.all",])
+
