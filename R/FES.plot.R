@@ -5,32 +5,38 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# Enrichment set plot similar to the one provided by the GSEA program
+# A demonstration of the gene signature overlap routines.
 
 # Input -------------------------------------------------------------------
-
+# msigdb formatted gmt files or yuor own gmt formatted gene sets
 
 # Methods -------------------------------------------------
 
 # Outputs -------------------------------------------------
 
+# a table of comparisons between two sets of gene sets with odds ratios and
+# p.values
+
 # Library imports ---------------------------------------------------------
 
-#' Enrichment set plot
+# acquire the msigdb files from Broad directly at
+# http://software.broadinstitute.org/gsea/downloads.jsp
+
+# this part will work with either set of genes.  Meaning you can use entrez ids
+# or gene names as you prefer.
+
+
+#' Title
 #'
-#' @param gmt A gmt formatted gene expression data set
-#' @param cls A cls formatted classifier
-#' @param comparison Which levels of cls should be compared defaults to levels 1 and 2
-#' @param geneset Either a vector of gene identifiers or a geneset name in combination with msigdb parameter
-#' @param sn.table (optional) A signal to noise named vector can be used in place of gmt, cls and comparison
-#' @param msigdb (optional) A database of signatures
+#' @param sn.table
+#' @param geneset
 #'
 #' @return
 #' @export
 #'
 #' @examples
-ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
-                    geneset=NULL, sn.table=NULL, msigdb=NULL) {
+FES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
+                     geneset=NULL, sn.table=NULL, msigdb=NULL) {
   if (is.null(gmt)) {
     if (is.null(sn.table)) {
       stop("Either gmt and cls or sn.table must be used to generate a plot")
@@ -50,7 +56,7 @@ ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
     geneset <- msigdb$gene[msigdb$sig == geneset]
   }
 
-  plot.data <- ES(sn.table, geneset, hits.only = F)
+  plot.data <- FES(sn.table, geneset, hits.only = F)
 
   plot.data$percentile <- cut(plot.data$sn,
                               quantile(plot.data$sn, probs = seq(0, 1, 1 / 9)))
@@ -74,15 +80,17 @@ ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
   sn.plot <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank, y = sn)) +
     ggplot2::geom_point() + ggplot2::theme_bw() +
     ggplot2::theme(plot.margin = ggplot2::unit(c(0, 1, 0, 0), "lines"),
-          panel.border = ggplot2::element_rect(size = 0),
-          panel.grid = ggplot2::element_blank())
-  ES.plot <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank, y = ES)) +
-    ggplot2::geom_line(color = "blue") + ggplot2::theme_bw() +
+                   panel.border = ggplot2::element_rect(size = 0),
+                   panel.grid = ggplot2::element_blank())
+  ES.plot <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank)) +
+    ggplot2::geom_line(color = "blue", aes(y = -log10(p.lower))) +
+    ggplot2::geom_line(color = "red", aes(y = -log10(p.higher))) +
+    ggplot2::theme_bw() +
     theme.blank.x
   ticks <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank,
-                                 xend = rank,
-                                 y = ifelse(hit, 0.1, 0),
-                                 yend = 0)) +
+                                                   xend = rank,
+                                                   y = ifelse(hit, 0.1, 0),
+                                                   yend = 0)) +
     ggplot2::geom_segment() + ggplot2::theme_bw() +
     theme.blank.y
   gradient <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank)) +
@@ -92,7 +100,11 @@ ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
     theme.blank.y +
     ggplot2::theme(legend.position = "none")
 
-    # hacky things to modify the facets to different heights
+  # There are issues getting the 4 plots to line up nicely.  This is one way to
+  # make it work.  It may break and there might be a better way to do this, but
+  # this is what I have.  What is going on is we make grobs of our plots then
+  # find the widths for the plot areas.  Then set all of the plot areas to have
+  # the same widths.  When these are plotted the 4 graphs will line up.
 
   gsn <- ggplot2::ggplotGrob(sn.plot)
   gES <- ggplot2::ggplotGrob(ES.plot)
@@ -114,4 +126,5 @@ ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
   gridExtra::grid.arrange(groblist[[1]], groblist[[2]], groblist[[3]],
                           groblist[[4]], ncol = 1, nrow = 4,
                           heights = c(5, 1, 1, 3))
+
 }
