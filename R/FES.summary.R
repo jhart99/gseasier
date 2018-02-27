@@ -37,13 +37,13 @@
 #' @examples
 FES.summary <- function(sn.table, geneset) {
   fes.data <- FES(sn.table, geneset)
-  # p.value correction for multiple testing
-  fes.data$p.lower <- fes.data$p.lower
+  high.point <- which.min(fes.data$p.higher)
+  low.point <- which.min(fes.data$p.lower)
   with(fes.data, data.frame(overlap = sum(hit),
-                            max.lo = which.min(p.lower),
-                            sn.lo = sn[which.min(p.lower)],
-                            p.lo = min(p.lower),
-                            max.hi = which.min(p.higher),
-                            sn.hi = sn[which.min(p.higher)],
-                            p.hi = min(p.higher)))
+                            max.lo = low.point,
+                            sn.lo = sn[low.point],
+                            p.lo = p.lower[low.point],
+                            max.hi = high.point,
+                            sn.hi = sn[high.point],
+                            p.hi = p.higher[high.point]))
 }

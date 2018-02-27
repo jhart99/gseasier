@@ -112,7 +112,12 @@ leading.edge(gender.sn, sigs$gene[sigs$sig == "REACTOME_METABOLISM_OF_RNA"])
 leading.edge(gender.sn, sigs$gene[sigs$sig == "REACTOME_CELL_CYCLE"])
 
 
-# FES
+# FES FES is Fast Enrichment Scoring.  It uses an iterative Fisher Enrichment
+# score over the preranked vector to look for enrichment of a signature's
+# members near either end of the ranking.  FES is not the same algorithm as
+# GSEA, but can be a fast way to look at all of the signatures prior to doing
+# GSEA.  You might also filter the signatures you look at by GSEA using this
+# method.
 
 gender.fes.table <- FES.table(gender.sn, sigs[sigs$class == "c1.all",])
 

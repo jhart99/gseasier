@@ -41,24 +41,31 @@ FES <- function(sn.table, geneset, hits.only=TRUE) {
   overlap <- intersect(genes, geneset)
   hit <- genes %in% overlap
   # preallocate
-  lower <- vector("numeric", nrow(sn.table))
-  higher <- vector("numeric", nrow(sn.table))
+  lower <- rep(1, nrow(sn.table))
+  higher <- rep(1, nrow(sn.table))
   hit.count <- 0
   miss.count <- 0
-  for (index in 1:nrow(sn.table)) {
-    if (hit[index]) {
+  if (hits.only) {
+    hits <- which(hit)
+    for (index in hits) {
       hit.count <- hit.count + 1
       lower[index] <- phyper(hit.count, length(overlap),
                              length(genes) - length(overlap), index)
       higher[index] <- phyper(length(overlap) - hit.count, length(overlap),
                               length(genes) - length(overlap),
                               length(genes) - index)
-    } else {
-      miss.count <- miss.count + 1
-      if (hits.only) {
-        lower[index] <- 1
-        higher[index] <- 1
+    }
+  } else {
+    for (index in 1:nrow(sn.table)) {
+      if (hit[index]) {
+        hit.count <- hit.count + 1
+        lower[index] <- phyper(hit.count, length(overlap),
+                               length(genes) - length(overlap), index)
+        higher[index] <- phyper(length(overlap) - hit.count, length(overlap),
+                                length(genes) - length(overlap),
+                                length(genes) - index)
       } else {
+        miss.count <- miss.count + 1
         lower[index] <- phyper(hit.count, length(overlap),
                                length(genes) - length(overlap), index)
         higher[index] <- phyper(length(overlap) - hit.count,

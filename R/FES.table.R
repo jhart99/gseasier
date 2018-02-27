@@ -37,11 +37,10 @@
 FES.table <- function(sn.table, genesets) {
   # this factor is to drop unused levels from the sig list which causes an issue
   # with ddply
-  genesets$sig <- factor(genesets$sig)
-  out.table <- plyr::ddply(genesets,
-                     plyr::.(sig),
-                     .parallel = T,
-                     .fun = function(df) FES.summary(sn.table, df$gene))
+  split.sigs <- split(genesets, factor(genesets$sig))
+  out.table <- do.call(rbind, lapply(split.sigs, function(sig) {
+    cbind(sig = sig$sig[1], FES.summary(sn.table, sig$gene))
+  }))
   out.table$q.lo <- p.adjust(out.table$p.lo, method = "BH")
   out.table$q.hi <- p.adjust(out.table$p.hi, method = "BH")
   out.table[order(pmin(out.table$p.lo, out.table$p.hi)), c(1:5, 9, 6:8, 10)]
