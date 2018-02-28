@@ -124,3 +124,13 @@ FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="chryq11"])
 
 gender.fes.table <- FES.table(gender.sn, sigs)
 FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="GO_RECEPTOR_ACTIVITY"])
+
+# Robustness analysis.  Inject jitter into the signal to noise and see if you
+# still get the same results.  The ES and FES scores are sensitive to the
+# ranking even if rank numbers could swing by 100s.  This will give us a look at
+# the data to see if it makes sense to pursue it.
+
+gender.jitter <- jitter.sn(gender.sn)
+gender.fes.jitter <- FES.table(gender.jitter, sigs)
+FES.plot(sn.table=gender.jitter, geneset=sigs$gene[sigs$sig=="GO_RNA_BINDING"])
+FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="GO_RNA_BINDING"])

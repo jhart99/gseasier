@@ -81,12 +81,14 @@ FES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
     ggplot2::geom_point() + ggplot2::theme_bw() +
     ggplot2::theme(plot.margin = ggplot2::unit(c(0, 1, 0, 0), "lines"),
                    panel.border = ggplot2::element_rect(size = 0),
-                   panel.grid = ggplot2::element_blank())
+                   panel.grid = ggplot2::element_blank()) +
+    ggplot2::ylab("Signal to Noise")
   ES.plot <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank)) +
     ggplot2::geom_line(color = "blue", aes(y = -log10(p.lower))) +
     ggplot2::geom_line(color = "red", aes(y = -log10(p.higher))) +
     ggplot2::theme_bw() +
-    theme.blank.x
+    theme.blank.x +
+    ggplot2::ylab(expression(log[10]*p))
   ticks <- ggplot2::ggplot(plot.data, ggplot2::aes(x = rank,
                                                    xend = rank,
                                                    y = ifelse(hit, 0.1, 0),
