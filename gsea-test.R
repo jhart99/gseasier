@@ -110,3 +110,27 @@ leading.edge.heatmap(gender.sn, sigs[sigs$sig %in% sigs.to.test, ])
 
 leading.edge(gender.sn, sigs$gene[sigs$sig == "REACTOME_METABOLISM_OF_RNA"])
 leading.edge(gender.sn, sigs$gene[sigs$sig == "REACTOME_CELL_CYCLE"])
+
+
+# FES FES is Fast Enrichment Scoring.  It uses an iterative Fisher Enrichment
+# score over the preranked vector to look for enrichment of a signature's
+# members near either end of the ranking.  FES is not the same algorithm as
+# GSEA, but can be a fast way to look at all of the signatures prior to doing
+# GSEA.  You might also filter the signatures you look at by GSEA using this
+# method.
+
+gender.fes.table <- FES.table(gender.sn, sigs[sigs$class == "c1.all",])
+FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="chryq11"])
+
+gender.fes.table <- FES.table(gender.sn, sigs)
+FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="GO_RECEPTOR_ACTIVITY"])
+
+# Robustness analysis.  Inject jitter into the signal to noise and see if you
+# still get the same results.  The ES and FES scores are sensitive to the
+# ranking even if rank numbers could swing by 100s.  This will give us a look at
+# the data to see if it makes sense to pursue it.
+
+gender.jitter <- jitter.sn(gender.sn)
+gender.fes.jitter <- FES.table(gender.jitter, sigs)
+FES.plot(sn.table=gender.jitter, geneset=sigs$gene[sigs$sig=="GO_RNA_BINDING"])
+FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="GO_RNA_BINDING"])
