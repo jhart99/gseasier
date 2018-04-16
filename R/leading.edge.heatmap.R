@@ -54,6 +54,7 @@ leading.edge.heatmap <- function(sn.table, sigs) {
 
   library(gplots)
   library(reshape2)
+  library(RColorBrewer)
   test.comp.matrix <- acast(test.compare, sig ~ test.sig,
                             value.var = "q.value")
   test.comp.matrix[test.comp.matrix == 0] <- 1e-100
