@@ -4,11 +4,9 @@
 \alias{z.ratio}
 \title{Title}
 \usage{
-z.ratio(dataA, dataB)
+z.ratio(a, b)
 }
 \arguments{
-\item{dataA}{}
-
 \item{dataB}{}
 }
 \description{

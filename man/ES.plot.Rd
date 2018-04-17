@@ -20,6 +20,15 @@ ES.plot(gmt = NULL, cls = NULL, comparison = NULL, geneset = NULL,
 
 \item{msigdb}{(optional) A database of signatures}
 }
+\value{
+A ggplot2 plot of the GSEA plot
+}
 \description{
 Enrichment set plot
+}
+\examples{
+ES.plot(gender, gender.cls, NULL, sigs$gene[sigs$sig == "chr4q22"])
+ES.plot(gender, gender.cls, geneset = sigs$gene[sigs$sig == "chr9p22"])
+ES.plot(gender, gender.cls, geneset = "chr9p22", msigdb = sigs)
+
 }

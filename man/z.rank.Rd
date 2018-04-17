@@ -7,10 +7,6 @@
 z.rank(gct, cls, contrast = NULL)
 }
 \arguments{
-\item{gct}{}
-
-\item{cls}{}
-
 \item{contrast}{}
 }
 \description{

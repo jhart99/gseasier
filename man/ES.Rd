@@ -2,13 +2,22 @@
 % Please edit documentation in R/ES.R
 \name{ES}
 \alias{ES}
-\title{Title}
+\title{Enrichment score}
 \usage{
 ES(sn.table, geneset, hits.only = T, weight = 1)
 }
 \arguments{
-\item{weight}{}
+\item{sn.table}{an ordered, valued ranking of genes}
+
+\item{geneset}{a set of genes to test}
+
+\item{hits.only}{Emit values only for genes in the geneset(True) or all values(False)}
+
+\item{weight}{The weighting parameter used in GSEA v2 and up.  For V1 this value is set to 0.}
+}
+\value{
+A data.frame of the enrichment score for each gene in the geneset or ranking.
 }
 \description{
-Title
+Enrichment score
 }
