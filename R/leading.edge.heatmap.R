@@ -60,5 +60,5 @@ leading.edge.heatmap <- function(sn.table, sigs) {
   test.comp.matrix[test.comp.matrix == 0] <- 1e-100
   test.comp.matrix <- -log2(test.comp.matrix)
   heatmap.2(test.comp.matrix, trace = "none", scale = "none",
-            margins = c(15,15), col=brewer.pal(9,"Reds"))
+            margins = c(15,15), col = brewer.pal(9,"Reds"))
 }

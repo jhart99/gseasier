@@ -120,10 +120,10 @@ leading.edge(gender.sn, sigs$gene[sigs$sig == "REACTOME_CELL_CYCLE"])
 # method.
 
 gender.fes.table <- FES.table(gender.sn, sigs[sigs$class == "c1.all",])
-FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="chryq11"])
+FES.plot(sn.table = gender.sn, geneset = sigs$gene[sigs$sig == "chryq11"])
 
 gender.fes.table <- FES.table(gender.sn, sigs)
-FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="GO_RECEPTOR_ACTIVITY"])
+FES.plot(sn.table = gender.sn, geneset = sigs$gene[sigs$sig == "GO_RECEPTOR_ACTIVITY"])
 
 # Robustness analysis.  Inject jitter into the signal to noise and see if you
 # still get the same results.  The ES and FES scores are sensitive to the
@@ -132,5 +132,5 @@ FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="GO_RECEPTOR_ACTIVITY"]
 
 gender.jitter <- jitter.sn(gender.sn)
 gender.fes.jitter <- FES.table(gender.jitter, sigs)
-FES.plot(sn.table=gender.jitter, geneset=sigs$gene[sigs$sig=="GO_RNA_BINDING"])
-FES.plot(sn.table=gender.sn, geneset=sigs$gene[sigs$sig=="GO_RNA_BINDING"])
+FES.plot(sn.table = gender.jitter, geneset = sigs$gene[sigs$sig == "GO_RNA_BINDING"])
+FES.plot(sn.table = gender.sn, geneset = sigs$gene[sigs$sig == "GO_RNA_BINDING"])
