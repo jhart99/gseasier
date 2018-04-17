@@ -20,7 +20,8 @@ Imports:
     gplots,
     uuid,
     XML,
-    plyr
+    plyr,
+    RColorBrewer
 Suggests:
     parallel
 RoxygenNote: 6.0.1

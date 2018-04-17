@@ -7,31 +7,35 @@
 # Description -------------------------------------------------------------
 # A demonstration of the gene signature overlap routines.
 
-# Input -------------------------------------------------------------------
-# msigdb formatted gmt files or yuor own gmt formatted gene sets
 
-# Methods -------------------------------------------------
-
-# Outputs -------------------------------------------------
-
-# a table of comparisons between two sets of gene sets with odds ratios and
-# p.values
-
-# Library imports ---------------------------------------------------------
-
-# acquire the msigdb files from Broad directly at
-# http://software.broadinstitute.org/gsea/downloads.jsp
-
-# this part will work with either set of genes.  Meaning you can use entrez ids
-# or gene names as you prefer.
-
-
-#' Title
+#' FES plot
 #'
-#' @param sn.table
-#' @param geneset
+#' FES(Fast Enrichment Score or Fisher Enrichment Score) uses a different method
+#' of calculating the enrichment score as compared with GSEA.  In FES, the
+#' hypergeometric distribution is used to determine the p-value for the
+#' partitioning of members of the geneset within the ordered valued gene
+#' ranking.  Two different p-values are calculated from the opposite ends of the
+#' ranking to measure enrichment at either the high or low ends of the spectrum.
+#' The use of the hypergeometric distribution rather than the complicated method
+#' used in GSEA means this method is very fast and yields results which are
+#' similar to GSEA itself.  In comparison to GSEA, FES is more sensitive to
+#' concentration of geneset members in the middle of the ranking as happens with
+#' GSEA v1 and is avoided by GSEA v2.  All results from FES or GSEA should be
+#' evaluated by looking at the plots and changes in gene expression to evaluate
+#' the feasibility of detecting the shift in the gene set distribution using
+#' experimental tools.  Typically if the changes are smaller than a 0.5 on the
+#' log2FC scale, they will be challenging to detect by methods such as Q-PCR.
 #'
-#' @return
+#' @param gmt a gmt formatted gene expression data.frame
+#' @param cls a vector describing the classes the gmt datasets belong to
+#' @param comparison which comparison of classes is desired defaults to the
+#'   first two levels from cls
+#' @param geneset the set of genes to test and plot
+#' @param sn.table the ordered, valued ranking of genes
+#' @param msigdb a database of signatures
+#'
+#' @return A ggplot2 plot of the FES score in a style similar to the GSEA style
+#'   plots
 #' @export
 #'
 #' @examples

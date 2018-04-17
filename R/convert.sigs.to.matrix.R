@@ -7,17 +7,6 @@
 # Description -------------------------------------------------------------
 # Converts the data.frame used by msigdb to a sparse matrix
 
-# Input -------------------------------------------------------------------
-#
-
-# Methods -------------------------------------------------
-# convert.sigs.to.matrix
-
-# Outputs -------------------------------------------------
-# a sparse matrix of genes by sets
-
-# Library imports ---------------------------------------------------------
-
 #' Converts signatures into a sparse matrix
 #'
 #' @param signatures Signatures table from loadSig

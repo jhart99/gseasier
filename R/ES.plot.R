@@ -7,15 +7,6 @@
 # Description -------------------------------------------------------------
 # Enrichment set plot similar to the one provided by the GSEA program
 
-# Input -------------------------------------------------------------------
-
-
-# Methods -------------------------------------------------
-
-# Outputs -------------------------------------------------
-
-# Library imports ---------------------------------------------------------
-
 #' Enrichment set plot
 #'
 #' @param gmt A gmt formatted gene expression data set
@@ -25,10 +16,14 @@
 #' @param sn.table (optional) A signal to noise named vector can be used in place of gmt, cls and comparison
 #' @param msigdb (optional) A database of signatures
 #'
-#' @return
+#' @return A ggplot2 plot of the GSEA plot
 #' @export
 #'
 #' @examples
+#' ES.plot(gender, gender.cls, NULL, sigs$gene[sigs$sig == "chr4q22"])
+#' ES.plot(gender, gender.cls, geneset = sigs$gene[sigs$sig == "chr9p22"])
+#' ES.plot(gender, gender.cls, geneset = "chr9p22", msigdb = sigs)
+#'
 ES.plot <- function(gmt=NULL, cls=NULL, comparison=NULL,
                     geneset=NULL, sn.table=NULL, msigdb=NULL) {
   if (is.null(gmt)) {

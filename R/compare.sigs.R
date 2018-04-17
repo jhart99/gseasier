@@ -4,8 +4,10 @@
 # Author ------------------------------------------------------------------
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
-# Description -------------------------------------------------------------
-# A gene set overlap function
+# Description --------------------------------------------------------------
+
+# A function to compare gene set overlap to determine if the genesets are driven
+# by the same genes.
 
 
 #' Compares sparse matrixes of gene signatures

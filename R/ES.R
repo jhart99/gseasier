@@ -5,35 +5,16 @@
 # Jonathan Ross Hart(jonathan@jonathanrosshart.com)
 
 # Description -------------------------------------------------------------
-# A demonstration of the gene signature overlap routines.
+# Calculates the enrichment score for a geneset vs a ranking
 
-# Input -------------------------------------------------------------------
-# msigdb formatted gmt files or yuor own gmt formatted gene sets
-
-# Methods -------------------------------------------------
-
-# Outputs -------------------------------------------------
-
-# a table of comparisons between two sets of gene sets with odds ratios and
-# p.values
-
-# Library imports ---------------------------------------------------------
-
-# acquire the msigdb files from Broad directly at
-# http://software.broadinstitute.org/gsea/downloads.jsp
-
-# this part will work with either set of genes.  Meaning you can use entrez ids
-# or gene names as you prefer.
-
-
-#' Title
+#' Enrichment score
 #'
-#' @param sn.table
-#' @param geneset
-#' @param hits.only
-#' @param weight
+#' @param sn.table an ordered, valued ranking of genes
+#' @param geneset a set of genes to test
+#' @param hits.only Emit values only for genes in the geneset(True) or all values(False)
+#' @param weight The weighting parameter used in GSEA v2 and up.  For V1 this value is set to 0.
 #'
-#' @return
+#' @return A data.frame of the enrichment score for each gene in the geneset or ranking.
 #' @export
 #'
 #' @examples
