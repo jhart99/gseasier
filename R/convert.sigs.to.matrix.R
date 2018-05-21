@@ -29,7 +29,7 @@ convert.sigs.to.matrix <- function(signatures, genes) {
   sig.labels <- unique(signatures$xsig)
   sig.matrix <- matrix(0L, nrow = length(sig.labels), ncol = total.genes)
   rownames(sig.matrix) <- sig.labels
-  colnames(sig.matrix) <- genes
+  colnames(sig.matrix) <- make.names(genes)
   system.time(for (i in 1:nrow(signatures)) {
     sig.matrix[signatures$xsig[i], signatures$xgene[i]] <- 1L
   })
