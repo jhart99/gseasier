@@ -39,5 +39,9 @@ read.gsea.results <- function(files) {
                                  "fwer", "rank", "leader")
     results.table
   }))
+  gsea.stats <- do.call(rbind, strsplit(as.character(results$leader), ", "))
+  gsea.stats <- matrix(as.numeric(sub("%", "", sub(".*=", "", gsea.stats))), ncol = 3)
+  colnames(gsea.stats) <- c("tags", "list", "signal")
+  results <- cbind(results, gsea.stats)
   results[order(results$ES), ]
 }
