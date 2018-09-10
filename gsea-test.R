@@ -103,6 +103,7 @@ test.comp.matrix <- -log2(test.comp.matrix)
 heatmap.2(test.comp.matrix, trace = "none", scale = "none",
           margins = c(12,12))
 
+
 # Leading edge
 sigs.to.test <- as.character(gender.gsea$sig[gender.gsea$q < 0.01])
 
@@ -134,3 +135,5 @@ gender.jitter <- jitter.sn(gender.sn)
 gender.fes.jitter <- FES.table(gender.jitter, sigs)
 FES.plot(sn.table = gender.jitter, geneset = sigs$gene[sigs$sig == "GO_RNA_BINDING"])
 FES.plot(sn.table = gender.sn, geneset = sigs$gene[sigs$sig == "GO_RNA_BINDING"])
+
+
